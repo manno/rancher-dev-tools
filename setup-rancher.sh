@@ -1,9 +1,9 @@
 #!/bin/sh
 
-set -euxo pipefail
+set -euo pipefail
 
 if [ $# -lt 1 ]; then
-  chart=$(ls -1tr ./*.tgz 2>/dev/null | tail -1)
+  chart=$(ls -1tr dist/artifacts/rancher-*.tgz 2>/dev/null | tail -1)
 else
   chart=$1
 fi
