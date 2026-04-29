@@ -1,0 +1,15 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Helm charts (downloaded/built artifacts)
+*.tgz
+
+# Logs
+*.log
