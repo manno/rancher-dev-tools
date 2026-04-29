@@ -30,32 +30,18 @@ echo "  Version: $VERSION"
 echo "  Commit:  $COMMIT"
 echo "  Arch:    $ARCH"
 
-# Build flags
-GCFLAGS=""
-LINKFLAGS=""
-if [ -n "${DEBUG}" ]; then
-    GCFLAGS="-N -l"
-fi
-
-if [ "$(uname)" != "Darwin" ]; then
-    LINKFLAGS="-extldflags -static"
-    if [ -z "${DEBUG}" ]; then
-        LINKFLAGS="${LINKFLAGS} -s"
-    fi
-fi
-
 # Build server
 echo "Building server binary..."
 CGO_ENABLED=0 go build -tags k8s \
-    -gcflags="all=${GCFLAGS}" \
-    -ldflags "-X github.com/rancher/rancher/pkg/version.Version=$VERSION -X github.com/rancher/rancher/pkg/version.GitCommit=$COMMIT $LINKFLAGS" \
+    -gcflags="all=-N -l" \
+    -ldflags "-X github.com/rancher/rancher/pkg/version.Version=$VERSION -X github.com/rancher/rancher/pkg/version.GitCommit=$COMMIT" \
     -o bin/rancher
 
 # Build agent
 echo "Building agent binary..."
 CGO_ENABLED=0 go build -tags k8s \
-    -gcflags="all=${GCFLAGS}" \
-    -ldflags "-X main.VERSION=$VERSION $LINKFLAGS" \
+    -gcflags="all=-N -l" \
+    -ldflags "-X main.VERSION=$VERSION" \
     -o bin/agent \
     ./cmd/agent
 
